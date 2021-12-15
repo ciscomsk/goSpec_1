@@ -9,13 +9,13 @@ func main() {
 }
 
 // go build <path_to_file.go> - создает (компилирует) исполняемый файл в месте вызова команды.
-// go build main.go
+// go build l1/main.go
 // ./main - запуск получившегося исполняемого файла.
 
 // go install <path_to_file.go> - создает исполняемый файл в GOPATH/bin.
-// go install main.go
+// go install l1/main.go
 
 // go run <path_to_file.go> - создает исполняемый файл в tmp-директории + запускает этот файл + удаляет/кэширует его.
 // --work - отображать путь к временной директории.
-// go run main.go
-// go run --work main.go
+// go run l1/main.go
+// go run --work l1/main.go

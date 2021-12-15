@@ -1,0 +1,72 @@
+https://contest.yandex.ru/contest/25622/problems/
+
+__A
+package main
+
+import (
+	"fmt"
+	"math"
+	"unicode/utf8"
+)
+
+func main() {
+	var text string
+
+	fmt.Scan(&text)
+
+	sum := float64(utf8.RuneCountInString(text)) * 0.23
+
+	intPart, fractPart := math.Modf(sum)
+	//fmt.Println(intpart)
+	//fmt.Println(div)
+
+	intP, fractP := int64(intPart), int64(fractPart * 100)
+
+	// v1
+	//if intPart > 1 {
+	//	fmt.Printf("%.0f р. %.0f коп.", intPart, fractPart * 100)
+	//	return
+	//}
+	//fmt.Printf("%.0f коп.", fractPart * 100)
+
+	// v2
+	if intPart > 1 {
+		fmt.Printf("%d р. %d коп.", intP, fractP)
+		return
+	}
+	fmt.Printf("%d коп.", fractP)
+}
+
+
+__B
+package main
+
+import (
+	"fmt"
+	"math"
+)
+
+func main() {
+	var a, b, c float64
+
+	fmt.Scan(&a, &b, &c)
+
+	if a != 0 {
+		discr := math.Pow(b, 2) - 4 * a * c
+
+		if discr > 0 {
+			fmt.Println("два корня")
+		} else if discr == 0 {
+			fmt.Println("один корень")
+		} else {
+			fmt.Println("корней нет")
+		}
+	} else {
+	    // ax + b = 0
+		if b != 0 {
+			fmt.Println("один корень")
+		} else {
+			fmt.Println("корней нет")
+		}
+	}
+}

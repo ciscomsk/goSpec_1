@@ -1,0 +1,158 @@
+https://contest.yandex.ru/contest/25622/problems/
+
+__C
+package main
+
+import "fmt"
+
+func main() {
+	var line string
+
+	for {
+		fmt.Scan(&line)
+
+		if line == "0" {
+			break
+		}
+		fmt.Println(line)
+	}
+}
+
+
+__D
+package main
+
+import (
+	"fmt"
+)
+
+// bufio. Выход после 2-й пустой строки.
+//func main() {
+//	reader := bufio.NewReader(os.Stdin)
+//	var wasEmptyLine bool
+//
+//	for {
+//		text, _ := reader.ReadString('\n')
+//		text = strings.Replace(text, "\n", "", -1)
+//
+//		if wasEmptyLine {
+//			fmt.Println("")
+//			break
+//		} else {
+//			if text == "" {
+//				wasEmptyLine = true
+//				fmt.Println("")
+//				continue
+//			}
+//			fmt.Println(text)
+//		}
+//	}
+//}
+
+// bufio. Выход после 1-й пустой строки.
+//func main() {
+//	reader := bufio.NewReader(os.Stdin)
+//
+//	for {
+//		text, _ := reader.ReadString('\n')
+//		text = strings.Replace(text, "\n", "", -1)
+//
+//		if text == "" {
+//			break
+//		}
+//		fmt.Println(text)
+//	}
+//}
+
+// Scanln. Выход после 1-й пустой строки.
+func main() {
+	var line string
+
+	for {
+		_, err := fmt.Scanln(&line)
+		if err != nil {
+			//fmt.Println(err)
+			return
+		}
+		fmt.Println(line)
+	}
+}
+
+
+__E
+package main
+
+import (
+	"fmt"
+	"strings"
+	"unicode/utf8"
+)
+
+func main() {
+	var pass1, pass2 string
+
+	for {
+		fmt.Scan(&pass1, &pass2)
+
+		if utf8.RuneCountInString(pass1) < 8 {
+			fmt.Println("Слишком короткий пароль!")
+			continue
+		} else if strings.Contains(pass1, "123") || strings.Contains(pass1, "qwe") {
+			fmt.Println("Слишком простой пароль!")
+			continue
+		} else if strings.Compare(pass1, pass2) != 0 {
+			fmt.Println("Введенные пароли различаются!")
+		}
+		fmt.Println("Ну наконец-то!")
+		break
+	}
+}
+
+
+__J
+package main
+
+import (
+	"fmt"
+	"math"
+)
+
+func main() {
+	var num float64
+
+	fmt.Scan(&num)
+
+	for i := -num; i <= math.Abs(num) ; i++ {
+		if i != 0 {
+			fmt.Printf("Квадрат числа %.0f равен %0.f\n", i, math.Pow(i, 2))
+		} else {
+			fmt.Println("Квадрат числа 0 равен 0")
+		}
+	}
+}
+
+
+__L
+package main
+
+import "fmt"
+
+func main() {
+	var numCount, sum int
+
+	fmt.Scan(&numCount)
+
+	for i := 1; i <= numCount; i++ {
+		var num int
+		fmt.Scan(&num)
+
+		if i % 2 == 0 {
+			sum -= num
+		} else {
+			sum += num
+		}
+	}
+	fmt.Println(sum)
+}
+
+

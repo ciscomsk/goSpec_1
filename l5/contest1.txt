@@ -1,0 +1,147 @@
+https://contest.yandex.ru/contest/25606/problems/
+
+
+__I
+package main
+
+import "fmt"
+
+func main() {
+	var num1, num2, num3 string
+
+    fmt.Scan(&num1, &num2, &num3)
+    fmt.Println(num3 + num2 + num1)
+}
+
+
+__J
+package main
+
+import "fmt"
+
+func main() {
+	var num1, num2 float32
+
+    fmt.Scan(&num1, &num2)
+
+    if int32(num1 + num2) % 2 == 0 {
+    	fmt.Println("ЧЁТНОЕ")
+    } else {
+    	fmt.Println("НЕЧЁТНОЕ")
+    }
+
+}
+
+
+__K
+package main
+
+import (
+	"fmt"
+	"strings"
+)
+
+func main() {
+	var line string
+
+	fmt.Scan(&line)
+
+	if strings.Contains(line, "чат") {
+		fmt.Println("БОТ")
+		return
+	}
+	fmt.Println("НЕ БОТ")
+}
+
+
+__L
+package main
+
+import (
+	"fmt"
+    "strings"
+	"unicode/utf8"
+)
+
+func main() {
+	var login, mail string
+
+    fmt.Scan(&login, &mail)
+
+    if utf8.RuneCountInString(login) < 10 || strings.Contains(login, "@") {
+    	fmt.Println("Некорректный логин")
+    } else if !strings.Contains(mail, "@") || !strings.Contains(mail, ".") {
+    	fmt.Println("Некорректная почта")
+    } else {
+    	fmt.Println("ОК")
+    }
+}
+
+
+__M
+package main
+
+import (
+	"fmt"
+	"strings"
+)
+
+func main() {
+	var line1, line2, line3 string
+
+	fmt.Scan(&line1, &line2, &line3)
+
+	if (strings.Compare(line1, "раз") == 0 || strings.Compare(line1, "один") == 0) && strings.Compare(line2, "два") == 0 && strings.Compare(line3, "три") == 0 {
+		fmt.Println("ОК")
+	} else if strings.Compare(line1, "1") == 0 && strings.Compare(line2, "2") == 0 && strings.Compare(line3, "3") == 0 {
+		fmt.Println("ОК")
+	} else {
+		fmt.Println("НЕ ПРАВИЛЬНО")
+	}
+}
+
+
+__N
+x + 1 y + 2
+x - 1 y + 2
+или
+x + 2 y + 1
+x + 2 y - 1
+или
+x + 1 y - 2
+x - 1 y - 2
+или
+x - 2 y + 1
+x - 2 y - 1
+=>
+abs x == 1
+abs y == 2
+или
+abs x == 2
+abs y == 1
+
+
+package main
+
+import (
+	"fmt"
+	"math"
+)
+
+func main() {
+	var currX, currY, nextX, nextY int
+
+	fmt.Scan(&currX, &currY, &nextX, &nextY)
+
+	absX := math.Abs(float64(currX) - float64(nextX))
+	absY := math.Abs(float64(currY) - float64(nextY))
+
+	// v1
+	//if currX + 1 == nextX && currY + 2 == nextY || currX - 1 == nextX && currY + 2 == nextY || currX + 2 == nextX && currY + 1 == nextY || currX + 2 == nextX && currY - 1 == nextY || currX + 1 == nextX && currY - 2 == nextY || currX - 1 == nextX && currY - 2 == nextY || currX - 2 == nextX && currY + 1 == nextY || currX - 2 == nextX && currY - 1 == nextY {
+	// v2
+	if absX == 1 && absY == 2 || absX == 2 && absY == 1 {
+		fmt.Println("ДА")
+	} else {
+		fmt.Println("НЕТ")
+	}
+}
