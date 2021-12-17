@@ -1,0 +1,246 @@
+https://contest.yandex.ru/contest/25667/
+
+__A
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strings"
+)
+
+func main() {
+	var (
+		serviceCount int
+		ourCount int
+		films [1000]string
+	)
+
+	fmt.Scan(&serviceCount)
+	fmt.Scan(&ourCount)
+
+	reader := bufio.NewReader(os.Stdin)
+
+	for i := 1; i <= serviceCount; i++ {
+		filmName, _ := reader.ReadString('\n')
+		filmName = strings.Replace(filmName, "\n", "", -1)
+		films[i - 1] = filmName
+	}
+
+	for i := 1; i <= ourCount; i++ {
+		filmName, _ := reader.ReadString('\n')
+		filmName = strings.Replace(filmName, "\n", "", -1)
+
+		maxCheckIdx := serviceCount - 1
+
+		for idx, val := range films {
+			if val == filmName {
+				fmt.Println("ЕСТЬ")
+				break
+			}
+
+			if idx >= maxCheckIdx {
+				fmt.Println("НЕТ В НАЛИЧИИ")
+				break
+			}
+		}
+	}
+}
+
+
+__B
+package main
+
+import "fmt"
+
+func main() {
+	var line string
+
+	fmt.Scan(&line)
+
+	runeSlice := []rune(line)
+	endIdx := len(runeSlice) - 1
+	if (runeSlice[0] == 'Д' || runeSlice[0] == 'д') && (runeSlice[endIdx] == 'А' || runeSlice[endIdx] == 'а') || (runeSlice[0] == 'А' || runeSlice[0] == 'а') && (runeSlice[endIdx] == 'Д' || runeSlice[endIdx] == 'д') {
+		fmt.Println("СОГЛАСЕН")
+		return
+	}
+	fmt.Println("НЕ СОГЛАСЕН")
+}
+
+
+__C
+package main
+
+import (
+	"fmt"
+	"unicode/utf8"
+)
+
+func main() {
+	var (
+		firstWord string
+		secondWord string
+		firstWordLength int
+		firstWordLastLetter rune
+		secondWordFirstLetter rune
+	)
+
+	fmt.Scan(&firstWord)
+
+	for {
+		fmt.Scan(&secondWord)
+
+		firstWordLength = utf8.RuneCountInString(firstWord)
+
+		firstWordLastLetter = ([]rune(firstWord))[firstWordLength - 1]
+		secondWordFirstLetter = ([]rune(secondWord))[0]
+
+		if firstWordLastLetter != secondWordFirstLetter {
+			fmt.Println(secondWord)
+			break
+		}
+
+		firstWord = secondWord
+	}
+}
+
+
+__D
+package main
+
+import (
+	"fmt"
+	"unicode/utf8"
+)
+
+func main() {
+	var (
+		firstWord string
+		secondWord string
+		firstWordLength int
+		firstWordLastLetter rune
+		secondWordFirstLetter rune
+	)
+
+	fmt.Scan(&firstWord)
+
+	for {
+		fmt.Scan(&secondWord)
+
+		firstWordLength = utf8.RuneCountInString(firstWord)
+
+		firstWordLastLetter = ([]rune(firstWord))[firstWordLength - 1]
+		secondWordFirstLetter = ([]rune(secondWord))[0]
+
+		if firstWordLastLetter == 'ь' || firstWordLastLetter == 'Ь' {
+			firstWord2LastLetter := ([]rune(firstWord))[firstWordLength - 2]
+
+			if firstWord2LastLetter != secondWordFirstLetter {
+				fmt.Println(secondWord)
+				break
+			}
+
+		} else if firstWordLastLetter != secondWordFirstLetter {
+			fmt.Println(secondWord)
+			break
+		}
+
+		firstWord = secondWord
+	}
+}
+
+
+__E
+package main
+
+import "fmt"
+
+func main() {
+	var (
+		line string
+		res []rune
+	)
+
+	fmt.Scan(&line)
+
+	for idx, rune :=  range []rune(line) {
+		if idx % 2 == 0 {
+			for i := 1; i <=3; i++ {
+				res = append(res, rune)
+			}
+		}
+	}
+
+	fmt.Println(string(res))
+}
+
+
+__F
+
+
+
+__G
+package main
+
+import "fmt"
+
+func main() {
+	var (
+		line string
+		max int
+		curr int
+	)
+
+	fmt.Scan(&line)
+	runeSlice := []rune(line)
+
+	for _, runeVal := range runeSlice {
+		if runeVal == 'о' {
+			curr++
+			if curr > max {
+				max = curr
+			}
+			continue
+		}
+		curr = 0
+
+	}
+	fmt.Println(max)
+}
+
+
+__H
+package main
+
+import "fmt"
+
+func main() {
+	var (
+		numCount int
+		num int
+		startPos int
+		endPos int
+		nums [100]int
+		sum int
+	)
+
+	fmt.Scan(&numCount)
+
+	for i := 1; i <= numCount; i++ {
+		fmt.Scan(&num)
+		nums[i - 1] = num
+	}
+
+	fmt.Scan(&startPos)
+	fmt.Scan(&endPos)
+
+	for i := startPos; i <= endPos; i++ {
+		sum += nums[i - 1]
+	}
+	fmt.Println(sum)
+
+}
+
+
+__I

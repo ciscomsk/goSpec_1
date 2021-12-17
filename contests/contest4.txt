@@ -1,0 +1,161 @@
+https://contest.yandex.ru/contest/25869/
+
+__A
+package main
+
+import "fmt"
+
+func main() {
+	var weight int
+
+	fmt.Scan(&weight)
+	if weight % 2 == 0 && weight != 2 {
+		fmt.Println("YES")
+	} else {
+		fmt.Println("NO")
+	}
+}
+
+
+__B
+package main
+
+import "fmt"
+
+func main() {
+	var (
+		height int
+		symbolCount int = 1
+	)
+
+	fmt.Scan(&height)
+	totalSymbols := 2 * height - 1
+
+	for i := 1; i <= height; i++ {
+		sideSpacesCount := (totalSymbols - symbolCount) / 2
+		for s := 1; s <= sideSpacesCount; s++ {
+			fmt.Print(" ")
+		}
+
+		for j := 1; j <= symbolCount; j++ {
+			fmt.Print("@")
+		}
+
+		for s := 1; s <= sideSpacesCount; s++ {
+			fmt.Print(" ")
+		}
+
+		fmt.Println()
+		symbolCount += 2
+	}
+}
+
+
+__C
+
+
+
+__D
+
+
+
+__E
+package main
+
+import "fmt"
+
+func main() {
+	var (
+		cCount int
+		rCount int
+		lastName string
+		cSlice []string
+		rSlice []string
+		contains bool
+		res int
+	)
+
+	fmt.Scan(&cCount, &rCount)
+
+	for i := 1; i <= cCount; i++ {
+		fmt.Scan(&lastName)
+		cSlice = append(cSlice, lastName)
+	}
+
+	for j := 1; j <= rCount; j++ {
+		fmt.Scan(&lastName)
+		rSlice = append(rSlice, lastName)
+	}
+
+	for _, cVal := range cSlice {
+		contains = false
+
+		for _, rVal := range rSlice {
+			if cVal == rVal {
+				contains = true
+				break
+			}
+		}
+
+		if !contains {
+			res++
+		}
+	}
+
+	for _, rVal := range rSlice {
+		contains = false
+
+		for _, cVal := range cSlice {
+			if rVal == cVal {
+				contains = true
+				break
+			}
+		}
+
+		if !contains {
+			res++
+		}
+	}
+
+	fmt.Println(res)
+}
+
+
+__F
+package main
+
+import "fmt"
+
+func main() {
+	var (
+		cCount int
+		rCount int
+		lastName string
+		allSlice []string
+		res int
+	)
+
+	fmt.Scan(&cCount, &rCount)
+	totalCount := cCount + rCount
+
+	for i := 1; i <= totalCount; i++ {
+		fmt.Scan(&lastName)
+		allSlice = append(allSlice, lastName)
+	}
+
+	for _, checkVal := range allSlice {
+		contains := 0
+
+		for _, val := range allSlice {
+			if val == checkVal {
+				contains++
+			}
+		}
+
+		if contains == 1 {
+			res++
+		}
+	}
+
+	fmt.Println(res)
+}

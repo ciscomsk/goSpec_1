@@ -1,0 +1,214 @@
+__2_H
+func main() {
+	var shotCount, numerator, denominator, resNumerator, resDenominator, commonDenominator int
+
+	fmt.Scan(&shotCount)
+	init := true
+
+	for i := 1; i <= shotCount; i++ {
+		fmt.Scan(&numerator)
+		fmt.Scan(&denominator)
+
+		if numerator == 0 || denominator == 0 {
+			continue
+		}
+
+		if init {
+			resNumerator = numerator
+			resDenominator = denominator
+
+			init = false
+			continue
+		}
+
+		commonDenominator = resDenominator * denominator
+		resNumerator = resNumerator * commonDenominator / resDenominator + numerator * commonDenominator / denominator
+		resDenominator = commonDenominator
+	}
+
+	if shotCount > 0 && resNumerator != 0 && resDenominator != 0 {
+		var a, b = resNumerator, resDenominator
+
+		for a != b {
+			if a > b {
+				a -= b
+			} else {
+				b -= a
+			}
+		}
+
+		fmt.Printf("%d/%d", resNumerator/a, resDenominator/a)
+	} else {
+		fmt.Printf("0/0")
+	}
+}
+
+
+__3_I
+func main() {
+	var (
+		taskCount int
+		allTasks [100]string
+		remainderCount int
+		taskIdx int
+		remainderTasks [100]string
+	)
+
+	fmt.Scan(&taskCount)
+	reader := bufio.NewReader(os.Stdin)
+
+	for i := 1; i <= taskCount; i++ {
+		task, _ := reader.ReadString('\n')
+		task = strings.Replace(task, "\n", "", -1)
+		allTasks[i - 1] = task
+	}
+	fmt.Println(allTasks)
+
+	fmt.Scan(&remainderCount)
+
+	for i := 1; i <= remainderCount; i++ {
+		fmt.Scan(&taskIdx)
+		remainderTasks[i - 1] = allTasks[taskIdx - 1]
+	}
+
+	for i := 0; i <= remainderCount - 1; i++ {
+		fmt.Println(remainderTasks[i])
+	}
+}
+
+
+__3_F
+func main() {
+	var (
+		bite int = 1
+		slice []rune
+	)
+
+	reader := bufio.NewReader(os.Stdin)
+	word, _ := reader.ReadString('\n')
+	word = strings.Trim(strings.Replace(word, "\n", "", -1), " ")
+
+	slice = []rune(word)
+
+	if len(slice) <= 2 {
+		fmt.Println(string(slice))
+		return
+	}
+
+	for {
+		if bite % 2 != 0 {
+			slice = slice[2:]
+			fmt.Println(string(slice))
+			bite += 1
+
+			if len(slice) <= 2 {
+				break
+			}
+			continue
+		}
+
+		sliceLength := len(slice)
+		slice = slice[:sliceLength - 2]
+		fmt.Println(string(slice))
+		bite += 1
+
+		if len(slice) <= 2 {
+			break
+		}
+		continue
+	}
+}
+
+
+__4_С
+func main() {
+	var (
+		height int
+		length int
+		sym    string
+		spacesCount int
+	)
+
+	fmt.Scan(&height, &length, &sym)
+	spacesCount = length - 2
+
+	for i := 1; i <= height; i++ {
+
+		if i == 1 || i == height {
+			for j := 1; j <= length; j++ {
+				fmt.Print(sym)
+			}
+
+			if i == 1 {
+				fmt.Println()
+			}
+		} else {
+			fmt.Print(sym)
+
+			for j := 1; j <= spacesCount; j++ {
+				fmt.Print(" ")
+			}
+
+			fmt.Print(sym)
+			fmt.Println()
+		}
+	}
+}
+
+__4_D
+func main() {
+	var (
+		first int = 1
+		second int
+		//third int
+		totalSum int
+		totalCount int
+		sumLeft int
+		count int
+		sumLeft2 int
+		count2 int
+	)
+
+	fmt.Scan(&totalSum, &totalCount)
+	for i := 1; i <= totalCount; i++ {
+		first = i
+		if totalSum - i * 20 >= 0 {
+			sumLeft = totalSum - i * 20
+			count += first
+
+			//fmt.Println(sumLeft)
+			//fmt.Println(count)
+
+			if sumLeft == 0 && count == totalCount {
+				fmt.Println(first, second)
+			} else {
+				for j := 1; j <= totalCount - first; j++ {
+					second = j
+					sumLeft2 = sumLeft - j * 10
+					count2 = count + second
+
+					if sumLeft2 == 0 && count2 == totalCount {
+						fmt.Println(first, second)
+					} else {
+						sumLeft2 = sumLeft
+						count2 = count
+					}
+
+				}
+			}
+
+			sumLeft = totalSum
+			count = 0
+			second = 0
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
