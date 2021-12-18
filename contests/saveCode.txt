@@ -44,80 +44,6 @@ func main() {
 }
 
 
-__3_I
-func main() {
-	var (
-		taskCount int
-		allTasks [100]string
-		remainderCount int
-		taskIdx int
-		remainderTasks [100]string
-	)
-
-	fmt.Scan(&taskCount)
-	reader := bufio.NewReader(os.Stdin)
-
-	for i := 1; i <= taskCount; i++ {
-		task, _ := reader.ReadString('\n')
-		task = strings.Replace(task, "\n", "", -1)
-		allTasks[i - 1] = task
-	}
-	fmt.Println(allTasks)
-
-	fmt.Scan(&remainderCount)
-
-	for i := 1; i <= remainderCount; i++ {
-		fmt.Scan(&taskIdx)
-		remainderTasks[i - 1] = allTasks[taskIdx - 1]
-	}
-
-	for i := 0; i <= remainderCount - 1; i++ {
-		fmt.Println(remainderTasks[i])
-	}
-}
-
-
-__3_F
-func main() {
-	var (
-		bite int = 1
-		slice []rune
-	)
-
-	reader := bufio.NewReader(os.Stdin)
-	word, _ := reader.ReadString('\n')
-	word = strings.Trim(strings.Replace(word, "\n", "", -1), " ")
-
-	slice = []rune(word)
-
-	if len(slice) <= 2 {
-		fmt.Println(string(slice))
-		return
-	}
-
-	for {
-		if bite % 2 != 0 {
-			slice = slice[2:]
-			fmt.Println(string(slice))
-			bite += 1
-
-			if len(slice) <= 2 {
-				break
-			}
-			continue
-		}
-
-		sliceLength := len(slice)
-		slice = slice[:sliceLength - 2]
-		fmt.Println(string(slice))
-		bite += 1
-
-		if len(slice) <= 2 {
-			break
-		}
-		continue
-	}
-}
 
 
 __4_С
@@ -158,20 +84,23 @@ func main() {
 __4_D
 func main() {
 	var (
-		first int = 1
-		second int
-		//third int
-		totalSum int
+		first      int = 1
+		second     int
+		third      int
+		totalSum   int
 		totalCount int
-		sumLeft int
-		count int
-		sumLeft2 int
-		count2 int
+		sumLeft    int
+		sumLeft2   int
+		sumLeft3   int
+		count      int
+		count2     int
+		count3     int
 	)
 
 	fmt.Scan(&totalSum, &totalCount)
 	for i := 1; i <= totalCount; i++ {
 		first = i
+
 		if totalSum - i * 20 >= 0 {
 			sumLeft = totalSum - i * 20
 			count += first
@@ -180,26 +109,39 @@ func main() {
 			//fmt.Println(count)
 
 			if sumLeft == 0 && count == totalCount {
-				fmt.Println(first, second)
+				fmt.Println(first, second, third)
 			} else {
-				for j := 1; j <= totalCount - first; j++ {
+				for j := 0; j <= totalCount - first; j++ {
 					second = j
 					sumLeft2 = sumLeft - j * 10
-					count2 = count + second
+					count2 = j
 
-					if sumLeft2 == 0 && count2 == totalCount {
-						fmt.Println(first, second)
+					if sumLeft2 == 0 && count + count2 == totalCount {
+						fmt.Println(first, second, third)
 					} else {
+						for k := 0; k <= totalCount - first - second; k++ {
+							third = k
+							sumLeft3 = sumLeft2 - k * 5
+							count3 = k
+
+							if sumLeft3 == 0 && count + count2 + count3 == totalCount {
+								fmt.Println(first, second, third)
+							}
+
+							sumLeft3 = sumLeft2
+							count3 = 0
+
+						}
+
 						sumLeft2 = sumLeft
-						count2 = count
+						count2 = 0
 					}
-
 				}
-			}
 
-			sumLeft = totalSum
-			count = 0
-			second = 0
+				sumLeft = totalSum
+				count = 0
+				second = 0
+			}
 		}
 	}
 }

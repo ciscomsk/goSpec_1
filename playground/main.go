@@ -1,50 +1,69 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"os"
-	"strings"
 )
 
 func main() {
 	var (
-		taskCount      int
-		allTasks       [100]string
-		remainderCount int
-		taskIdx        int
-		remainderTasks [100]string
+		first      int = 1
+		second     int
+		third      int
+		totalSum   int
+		totalCount int
+		sumLeft    int
+		sumLeft2   int
+		sumLeft3   int
+		count      int
+		count2     int
+		count3     int
 	)
 
-	reader := bufio.NewReader(os.Stdin)
+	fmt.Scan(&totalSum, &totalCount)
+	for i := 1; i <= totalCount; i++ {
+		first = i
 
-	fmt.Scan(&taskCount)
-	//taskCountS, _ := reader.ReadString('\n')
-	//taskCountS = strings.Replace(taskCountS, "\n", "", -1)
-	//taskCount, _ = strconv.Atoi(taskCountS)
+		if totalSum-i*20 >= 0 {
+			sumLeft = totalSum - i*20
+			count += first
 
-	for i := 1; i <= taskCount; i++ {
-		task, _ := reader.ReadString('\n')
-		task = strings.Replace(task, "\n", "", -1)
-		allTasks[i-1] = task
-	}
-	//fmt.Println(allTasks)
+			//fmt.Println(sumLeft)
+			//fmt.Println(count)
 
-	fmt.Scan(&remainderCount)
-	//remainderCountS, _ := reader.ReadString('\n')
-	//remainderCountS = strings.Replace(remainderCountS, "\n", "", -1)
-	//remainderCount, _ = strconv.Atoi(remainderCountS)
+			if sumLeft == 0 && count == totalCount {
+				fmt.Println(first, second, third)
+			} else {
+				for j := 0; j <= totalCount-first; j++ {
+					second = j
+					sumLeft2 = sumLeft - j*10
+					count2 = j
 
-	for i := 1; i <= remainderCount; i++ {
-		fmt.Scan(&taskIdx)
-		//taskIdxS, _ := reader.ReadString('\n')
-		//taskIdxS = strings.Replace(taskIdxS, "\n", "", -1)
-		//taskIdx, _ = strconv.Atoi(remainderCountS)
+					if sumLeft2 == 0 && count+count2 == totalCount {
+						fmt.Println(first, second, third)
+					} else {
+						for k := 0; k <= totalCount-first-second; k++ {
+							third = k
+							sumLeft3 = sumLeft2 - k*5
+							count3 = k
 
-		remainderTasks[i-1] = allTasks[taskIdx-1]
-	}
+							if sumLeft3 == 0 && count+count2+count3 == totalCount {
+								fmt.Println(first, second, third)
+							}
 
-	for i := 0; i <= remainderCount-1; i++ {
-		fmt.Println(remainderTasks[i])
+							sumLeft3 = sumLeft2
+							count3 = 0
+
+						}
+
+						sumLeft2 = sumLeft
+						count2 = 0
+					}
+				}
+
+				sumLeft = totalSum
+				count = 0
+				second = 0
+			}
+		}
 	}
 }
