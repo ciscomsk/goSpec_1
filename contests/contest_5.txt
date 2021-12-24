@@ -1,0 +1,245 @@
+https://contest.yandex.ru/contest/25993/
+
+__A
+package main
+
+// Факториал есть в big.Int - MulRange
+
+import (
+	"fmt"
+	"math/big"
+)
+
+func Factorial(i int) *big.Int {
+	if i > 0 {
+		res := new(big.Int).SetInt64(int64(1))
+		for j := 1; j <= i; j++ {
+			res.Mul(res, new(big.Int).SetInt64(int64(j)))
+		}
+		return res
+	}
+	return new(big.Int).SetInt64(int64(1))
+}
+
+func combination(n int, m int) *big.Int {
+	// !!! При 30 11 - переполнение
+	//if n >= m {
+	//	return Factorial(n) / (Factorial(m) * Factorial(n - m))
+	//}
+	//return 0
+	factN := Factorial(n)
+	factM := Factorial(m)
+	factNsubM := Factorial(n - m)
+	return new(big.Int).Div(factN, new(big.Int).Mul(factM, factNsubM))
+}
+
+func main() {
+	var set, subset int
+
+	fmt.Scan(&set, &subset)
+	//fmt.Println(^uint(0))	// MaxUint
+	//fmt.Printf("%T, %v\n", Factorial(set), Factorial(set))
+	//fmt.Printf("%T, %v\n", Factorial(subset), Factorial(subset))
+	//fmt.Printf("%T, %v\n", Factorial(19), Factorial(19))
+	//fmt.Printf("%T, %v\n", new(big.Int).Mul(Factorial(subset), Factorial(19)), new(big.Int).Mul(Factorial(subset), Factorial(19)))
+	fmt.Println(combination(set, subset))
+
+	// 18446744073709551615 == MaxUint
+	// 265252859812191058636308480000000 == Factorial(30)
+	// 4855683143999265177600000 == Factorial(11) * Factorial(19)
+}
+
+
+__B
+package main
+
+import "fmt"
+
+type Sequence struct {
+	message string
+}
+
+func New(newMessage string) *Sequence {
+	return &Sequence{newMessage}
+}
+
+func (s *Sequence) FindMax() int {
+	var (
+		currHeads, maxHeads int
+		//prevRune rune
+	)
+	runeSlice := []rune(s.message)
+
+	for _, rune := range runeSlice {
+		if rune == 'о' {
+			currHeads++
+			if currHeads > maxHeads {
+				maxHeads = currHeads
+			}
+		} else {	// v1. v2 - 3G
+			currHeads = 0
+		}
+	}
+
+	return maxHeads
+}
+
+func main() {
+	var msg string
+	fmt.Scan(&msg)
+
+	seq := New(msg)
+	fmt.Println(seq.FindMax())
+}
+
+
+__C
+package main
+
+import (
+	"fmt"
+	"sort"
+	"unicode/utf8"
+)
+
+type SmartList struct {
+	words []string
+}
+
+func New(newWords []string) *SmartList {
+	return &SmartList{newWords}
+}
+
+func (sl *SmartList) GetAnswer() {
+	strSlice := sl.words
+
+	sort.Slice(strSlice, func(i, j int) bool {
+		return utf8.RuneCountInString(strSlice[i]) < utf8.RuneCountInString(strSlice[j])
+	})
+}
+
+func main() {
+	var (
+		strCount int
+		word string
+		words []string
+	)
+
+	fmt.Scan(&strCount)
+
+	for i := 1; i <= strCount; i++ {
+		fmt.Scan(&word)
+		words = append(words, word)
+	}
+
+	sl := New(words)
+	sl.GetAnswer()
+	sliceStr := sl.words
+
+	for i := 0; i < len(sliceStr); i++ {
+		fmt.Println(sliceStr[i])
+	}
+}
+
+
+__E
+package main
+
+import (
+	"fmt"
+	"math"
+)
+
+type Point struct {
+	x float64
+	y float64
+}
+
+func NewPoint(newX, newY float64) *Point {
+	return &Point{newX, newY}
+}
+
+func (p *Point) GetX() float64 {
+	return p.x
+}
+
+func (p *Point) GetY() float64 {
+	return p.y
+}
+
+func (p *Point) SetX(newX float64) {
+	p.x = newX
+}
+
+func (p *Point) SetY(newY float64) {
+	p.y = newY
+}
+
+func (p *Point) Stringify() string {
+	strRep := fmt.Sprintf("Point{X: %.2f, Y: %.2f}", p.x, p.y)
+	return strRep
+}
+
+type Line struct {
+	p1 Point
+	p2 Point
+}
+
+func NewLine(newP1, newP2 Point) *Line {
+	return &Line{newP1, newP2}
+}
+
+func (l *Line) GetP1() Point {
+	return l.p1
+}
+
+func (l *Line) GetP2() Point {
+	return l.p2
+}
+
+func (l *Line) SetP1(newP1 Point) {
+	l.p1 = newP1
+}
+
+func (l *Line) SetP2(newP2 Point) {
+	l.p2 = newP2
+}
+
+func (l *Line) Length() float64 {
+	length := math.Sqrt(math.Pow(l.p2.x - l.p1.x, 2) + math.Pow(l.p2.y - l.p1.y, 2))
+	return length
+}
+
+func (l *Line) IsInSegment(p3 Point) bool {
+	if (p3.x - l.p1.x) / (l.p2.x - l.p1.x) == (p3.y - l.p1.y) / (l.p2.y - l.p1.y) {
+		return true
+	}
+	return false
+}
+
+func (l *Line) Stringify() string {
+	strRep := fmt.Sprintf("Line{P1: %s, P2: %s", l.p1.Stringify(), l.p2.Stringify())
+	return strRep
+}
+
+func main() {
+	var x1, x2, x3, y1, y2, y3 float64
+	fmt.Scan(&x1, &y1, &x2, &y2)
+	fmt.Scan(&x3, &y3)
+
+	p1 := NewPoint(x1, y1)
+	p2 := NewPoint(x2, y2)
+	p3 := NewPoint(x3, y3)
+
+	l := Line{*p1, *p2}
+
+	if l.IsInSegment(*p3) {
+		fmt.Println("YES")
+	} else {
+		fmt.Println("NO")
+	}
+}
+
+
+
+

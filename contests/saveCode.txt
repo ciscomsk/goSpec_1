@@ -83,6 +83,26 @@ func main() {
 
 
 
+__5_A
+func Factorial(i uint) uint {
+	if i > 0 {
+		return i * Factorial(i - 1)
+	}
+	return 1
+}
+
+func combination(n uint, m uint) uint {
+	return Factorial(n) / (Factorial(m) * Factorial(n - m))
+}
+
+func main() {
+	var set, subset uint
+
+	fmt.Scan(&set, &subset)
+	fmt.Println(combination(set, subset))
+}
+
+
 
 
 

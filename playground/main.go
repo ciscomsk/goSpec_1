@@ -2,68 +2,44 @@ package main
 
 import (
 	"fmt"
+	"math/big"
 )
 
-func main() {
-	var (
-		first      int = 1
-		second     int
-		third      int
-		totalSum   int
-		totalCount int
-		sumLeft    int
-		sumLeft2   int
-		sumLeft3   int
-		count      int
-		count2     int
-		count3     int
-	)
-
-	fmt.Scan(&totalSum, &totalCount)
-	for i := 1; i <= totalCount; i++ {
-		first = i
-
-		if totalSum-i*20 >= 0 {
-			sumLeft = totalSum - i*20
-			count += first
-
-			//fmt.Println(sumLeft)
-			//fmt.Println(count)
-
-			if sumLeft == 0 && count == totalCount {
-				fmt.Println(first, second, third)
-			} else {
-				for j := 0; j <= totalCount-first; j++ {
-					second = j
-					sumLeft2 = sumLeft - j*10
-					count2 = j
-
-					if sumLeft2 == 0 && count+count2 == totalCount {
-						fmt.Println(first, second, third)
-					} else {
-						for k := 0; k <= totalCount-first-second; k++ {
-							third = k
-							sumLeft3 = sumLeft2 - k*5
-							count3 = k
-
-							if sumLeft3 == 0 && count+count2+count3 == totalCount {
-								fmt.Println(first, second, third)
-							}
-
-							sumLeft3 = sumLeft2
-							count3 = 0
-
-						}
-
-						sumLeft2 = sumLeft
-						count2 = 0
-					}
-				}
-
-				sumLeft = totalSum
-				count = 0
-				second = 0
-			}
+func Factorial(i int) *big.Int {
+	if i > 0 {
+		res := new(big.Int).SetInt64(int64(1))
+		for j := 1; j <= i; j++ {
+			res.Mul(res, new(big.Int).SetInt64(int64(j)))
 		}
+		return res
 	}
+	return new(big.Int).SetInt64(int64(1))
+}
+
+func combination(n int, m int) *big.Int {
+	// !!! При 30 11 - переполнение
+	//if n >= m {
+	//	return Factorial(n) / (Factorial(m) * Factorial(n - m))
+	//}
+	//return 0
+	factN := Factorial(n)
+	factM := Factorial(m)
+	factNsubM := Factorial(n - m)
+	return new(big.Int).Div(factN, new(big.Int).Mul(factM, factNsubM))
+}
+
+func main() {
+	var set, subset int
+
+	fmt.Scan(&set, &subset)
+	//fmt.Println(^uint(0))	// MaxUint
+	//fmt.Printf("%T, %v\n", Factorial(set), Factorial(set))
+	//fmt.Printf("%T, %v\n", Factorial(subset), Factorial(subset))
+	//fmt.Printf("%T, %v\n", Factorial(19), Factorial(19))
+	//fmt.Printf("%T, %v\n", new(big.Int).Mul(Factorial(subset), Factorial(19)), new(big.Int).Mul(Factorial(subset), Factorial(19)))
+	fmt.Println(combination(set, subset))
+
+	// 18446744073709551615 == MaxUint
+	// 265252859812191058636308480000000 == Factorial(30)
+	// 4855683143999265177600000 == Factorial(11) * Factorial(19)
 }

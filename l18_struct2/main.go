@@ -16,7 +16,6 @@ type Student struct {
 }
 
 // Встроенные структуры - добавление полей одной структуры к другой. В go через этот механизм реализовано наследование.
-
 type Professor struct {
 	firstName string
 	lastName  string
